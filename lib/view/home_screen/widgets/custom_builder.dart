@@ -7,7 +7,9 @@
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return   CarouselSlider.builder(
+//     return   
+//   }
+// }CarouselSlider.builder(
 //             itemCount:4,
            
        
@@ -47,5 +49,3 @@
         
                  
 //                   )   ;
-//   }
-// }

@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:news_app_task/controller/homescreen_controller.dart';
@@ -12,7 +13,7 @@ class NewsHomePage extends StatefulWidget {
 }
 
 class _NewsHomePageState extends State<NewsHomePage> {
-  // Controller for search functionality
+ 
   TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
 
@@ -48,13 +49,13 @@ class _NewsHomePageState extends State<NewsHomePage> {
           SizedBox(
             width: 10,
           ),
-          Icon(Icons.bookmark_add_outlined)
+        
         ],
       ),
       body: Consumer<HomeScreenController>(
         builder: (context, provider, child) {
         
-          List filteredArticles = provider.articlesList
+          List NewsArticles = provider.articlesList
               .where((article) =>
                   article.title.toString().toLowerCase().contains(_searchQuery.toLowerCase()) ||
                   article.description.toString().toLowerCase().contains(_searchQuery.toLowerCase()))
@@ -85,12 +86,8 @@ class _NewsHomePageState extends State<NewsHomePage> {
                   ),
                 ),
 
-                // Categories Section
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Categories',
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold,color: Colors.blue)),
-                ),
+                
+              
                 Container(
                   height: 50,
                   child: ListView.builder(
@@ -104,11 +101,11 @@ class _NewsHomePageState extends State<NewsHomePage> {
                             MaterialPageRoute(
                               builder: (context) => CategoryDetailPage(
                                 category: Dummydb.categories[index],
-                                title: provider.articlesList[index].title.toString(),
-                                author: provider.articlesList[index].author.toString(),
-                                discription: provider.articlesList[index].description.toString(),
-                                content: provider.articlesList[index].content.toString(),
-                                imageUrl: provider.articlesList[index].urlToImage.toString(),
+                                title: homescreenstate.articlesList[index].title.toString(),
+                                author: homescreenstate.articlesList[index].author.toString(),
+                                discription: homescreenstate.articlesList[index].description.toString(),
+                                content: homescreenstate.articlesList[index].content.toString(),
+                                imageUrl: homescreenstate.articlesList[index].urlToImage.toString(),
                               ),
                             ),
                           );
@@ -124,6 +121,7 @@ class _NewsHomePageState extends State<NewsHomePage> {
                     },
                   ),
                 ),
+                
 
        
                 Padding(
@@ -132,26 +130,54 @@ class _NewsHomePageState extends State<NewsHomePage> {
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
+                        color: Colors.blue
                       )),
-                ),
+                ),CarouselSlider.builder(
+            itemCount: NewsArticles.length,
+           
+       
+       options: CarouselOptions(
+        
+        height: 300,
+      
+      
+      viewportFraction: 1,
+      initialPage: 0,
+      enableInfiniteScroll: true,
+      reverse: true,
+      autoPlay: true,
+      autoPlayInterval: Duration(seconds: 2),
+      autoPlayAnimationDuration: Duration(milliseconds: 1000),
+      autoPlayCurve: Curves.bounceIn,
+      
+      scrollDirection: Axis.horizontal,
+       ),
+       itemBuilder: (context, index, realIndex) => 
+       
+      
+        
+        
+                 
+                  
+               
                 
                 Container(
                   height: 350,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: filteredArticles.length, 
+                    itemCount: NewsArticles.length, 
                     itemBuilder: (context, index) {
-                      return GestureDetector(
+                      return InkWell(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => NewsDetailsScreen(
-                                title: filteredArticles[index].title.toString(),
-                                author: filteredArticles[index].author.toString(),
-                                discription: filteredArticles[index].description.toString(),
-                                imageUrl: filteredArticles[index].urlToImage.toString(),
-                                content: filteredArticles[index].content.toString(),
+                                title: NewsArticles[index].title.toString(),
+                                author: NewsArticles[index].author.toString(),
+                                discription: NewsArticles[index].description.toString(),
+                                imageUrl: NewsArticles[index].urlToImage.toString(),
+                                content: NewsArticles[index].content.toString(),
                               ),
                             ),
                           );
@@ -166,7 +192,7 @@ class _NewsHomePageState extends State<NewsHomePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Image.network(
-                                  filteredArticles[index].urlToImage.toString(),
+                                  NewsArticles[index].urlToImage.toString(),
                                   height: 120,
                                   width: double.infinity,
                                   fit: BoxFit.cover,
@@ -174,7 +200,7 @@ class _NewsHomePageState extends State<NewsHomePage> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    filteredArticles[index].title.toString(),
+                                    NewsArticles[index].title.toString(),
                                     style: TextStyle(
                                         fontSize: 18, fontWeight: FontWeight.bold),
                                   ),
@@ -182,7 +208,7 @@ class _NewsHomePageState extends State<NewsHomePage> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    filteredArticles[index].description.toString(),
+                                    NewsArticles[index].description.toString(),
                                     style: TextStyle(fontSize: 14, color: Colors.grey),
                                   ),
                                 ),
@@ -194,30 +220,30 @@ class _NewsHomePageState extends State<NewsHomePage> {
                     },
                   ),
                 ),
-
+                ),
                
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('Latest News',
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                  child: Text('Recent News',
+                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,color: Colors.blue)),
                 ),
                 ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: filteredArticles.length, // Use filtered articles
+                  itemCount: NewsArticles.length,
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
                         ListTile(
                           contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                           leading: Image.network(
-                            filteredArticles[index].urlToImage.toString(),
+                            NewsArticles[index].urlToImage.toString(),
                             width: 50,
                             height: 50,
                             fit: BoxFit.cover,
                           ),
-                          title: Text(filteredArticles[index].title.toString()),
-                          subtitle: Text(filteredArticles[index].description.toString()),
+                          title: Text(NewsArticles[index].title.toString()),
+                          subtitle: Text(NewsArticles[index].description.toString()),
                         ),
                         Divider(
                           color: Colors.black,
