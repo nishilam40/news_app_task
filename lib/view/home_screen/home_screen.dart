@@ -38,7 +38,7 @@ class _NewsHomePageState extends State<NewsHomePage> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.search,color: Colors.blue,),
             onPressed: () {
          
               setState(() {
@@ -71,7 +71,7 @@ class _NewsHomePageState extends State<NewsHomePage> {
                   child: TextFormField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      labelText: 'Search news...',
+                      labelText: 'Search news',
                       prefixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -246,7 +246,7 @@ class _NewsHomePageState extends State<NewsHomePage> {
                           subtitle: Text(NewsArticles[index].description.toString()),
                         ),
                         Divider(
-                          color: Colors.black,
+                          color: Colors.blue,
                           thickness: 2,
                         ),
                       ],
